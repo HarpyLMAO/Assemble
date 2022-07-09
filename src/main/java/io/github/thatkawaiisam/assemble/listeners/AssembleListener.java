@@ -1,5 +1,7 @@
-package io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble.listeners;
 
+import io.github.thatkawaiisam.assemble.Assemble;
+import io.github.thatkawaiisam.assemble.board.AssembleBoard;
 import io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
 import io.github.thatkawaiisam.assemble.events.AssembleBoardDestroyEvent;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble.stuff;
 
 public class AssembleException extends RuntimeException {
 

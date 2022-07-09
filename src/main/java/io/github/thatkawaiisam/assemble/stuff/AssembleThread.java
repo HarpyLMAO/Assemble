@@ -1,5 +1,8 @@
-package io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble.stuff;
 
+import io.github.thatkawaiisam.assemble.Assemble;
+import io.github.thatkawaiisam.assemble.board.AssembleBoard;
+import io.github.thatkawaiisam.assemble.board.AssembleBoardEntry;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -17,14 +20,14 @@ public class AssembleThread extends Thread {
      *
      * @param assemble instance.
      */
-    AssembleThread(Assemble assemble) {
+    public AssembleThread(Assemble assemble) {
         this.assemble = assemble;
         this.start();
     }
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             try {
                 tick();
                 sleep(assemble.getTicks() * 50);
@@ -75,9 +78,7 @@ public class AssembleThread extends Thread {
                     }
 
                     // Reverse the lines because scoreboard scores are in descending order.
-                    if (!this.assemble.getAssembleStyle().isDescending()) {
-                        Collections.reverse(newLines);
-                    }
+                    Collections.reverse(newLines);
 
                     // Remove excessive amount of board entries.
                     if (board.getEntries().size() > newLines.size()) {
@@ -91,7 +92,7 @@ public class AssembleThread extends Thread {
                     }
 
                     // Update existing entries / add new entries.
-                    int cache = this.assemble.getAssembleStyle().getStartNumber();
+                    int cache = this.assemble.getStartNumber();
                     for (int i = 0; i < newLines.size(); i++) {
                         AssembleBoardEntry entry = board.getEntryAtPosition(i);
 
@@ -108,16 +109,14 @@ public class AssembleThread extends Thread {
                         // Update text, setup the team, and update the display values.
                         entry.setText(line);
                         entry.setup();
-                        entry.send(
-                                this.assemble.getAssembleStyle().isDescending() ? cache-- : cache++
-                        );
+                        entry.send(cache++);
                     }
                 }
 
                 if (player.getScoreboard() != scoreboard && !assemble.isHook()) {
                     player.setScoreboard(scoreboard);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 throw new AssembleException("There was an error updating " + player.getName() + "'s scoreboard.");
             }

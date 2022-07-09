@@ -1,9 +1,10 @@
-package io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble.board;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import io.github.thatkawaiisam.assemble.Assemble;
 import io.github.thatkawaiisam.assemble.events.AssembleBoardCreatedEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -72,9 +73,9 @@ public class AssembleBoard {
 	 * @param player who's board to setup.
 	 */
 	private void setup(Player player) {
-		Scoreboard scoreboard = getScoreboard();
+		Scoreboard scoreboard = this.getScoreboard();
 		player.setScoreboard(scoreboard);
-		getObjective();
+		this.getObjective();
 
 		// Call Events if enabled.
 		if (assemble.isCallEvents()) {

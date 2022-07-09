@@ -1,5 +1,7 @@
-package io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble.board;
 
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -71,10 +73,11 @@ public class AssembleBoardEntry {
 	 * @param position of entry.
 	 */
 	public void send(int position) {
-		// Set Prefix & Suffix.
-		String[] split = AssembleUtils.splitTeamText(text);
-		this.team.setPrefix(split[0]);
-		this.team.setSuffix(split[1]);
+		String[] split = this.splitText(text);
+
+		team.set
+		team.setPrefix(split[0]);
+		team.setSuffix(split[1]);
 
 		// Set the score
 		this.board.getObjective().getScore(this.identifier).setScore(position);
@@ -86,6 +89,37 @@ public class AssembleBoardEntry {
 	public void remove() {
 		this.board.getIdentifiers().remove(this.identifier);
 		this.board.getScoreboard().resetScores(this.identifier);
+	}
+
+
+	private String getFirstSplit(String string) {
+		return string.length() > 16 ? string.substring(0, 16) : string;
+	}
+
+	private String getSecondSplit(String string) {
+		if (string.length() > 32) string = string.substring(0, 32);
+		return string.length() > 16 ? string.substring(16) : "";
+	}
+
+	private String[] splitText(String text) {
+		if (text.length() < 17) {
+			return new String[]{text, ""};
+		} else {
+			final String left = text.substring(0, 16);
+			final String right = text.substring(16);
+
+			if (left.endsWith("§")) {
+				return new String[]{
+						left.substring(0, left.toCharArray().length - 1),
+						StringUtils.left(ChatColor.getLastColors(left) + "§" + right, 16)
+				};
+			} else {
+				return new String[]{
+						left,
+						StringUtils.left(ChatColor.getLastColors(left) + right, 16)
+				};
+			}
+		}
 	}
 
 }

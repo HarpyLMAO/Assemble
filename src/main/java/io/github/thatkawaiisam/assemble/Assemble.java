@@ -4,7 +4,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import io.github.thatkawaiisam.assemble.board.AssembleBoard;
 import io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
+import io.github.thatkawaiisam.assemble.listeners.AssembleListener;
+import io.github.thatkawaiisam.assemble.stuff.AssembleThread;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,14 +25,14 @@ public class Assemble {
 	private AssembleAdapter adapter;
 	private AssembleThread thread;
 	private AssembleListener listeners;
-	private AssembleStyle assembleStyle = AssembleStyle.MODERN;
-
 	private Map<UUID, AssembleBoard> boards;
 
 	private long ticks = 2;
 	private boolean hook = false, debugMode = true, callEvents = true;
 
 	private final ChatColor[] chatColorCache = ChatColor.values();
+
+	private int startNumber = 1;
 
 	/**
 	 * Assemble.
@@ -76,7 +79,7 @@ public class Assemble {
 				}
 			}
 
-			getBoards().putIfAbsent(player.getUniqueId(), new AssembleBoard(player, this));
+			this.getBoards().putIfAbsent(player.getUniqueId(), new AssembleBoard(player, this));
 		}
 
 		// Start Thread.
@@ -107,9 +110,8 @@ public class Assemble {
 				continue;
 			}
 
-			getBoards().remove(uuid);
+			this.getBoards().remove(uuid);
 			player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		}
 	}
-
 }

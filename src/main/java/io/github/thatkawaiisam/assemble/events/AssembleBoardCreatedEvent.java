@@ -1,6 +1,6 @@
 package io.github.thatkawaiisam.assemble.events;
 
-import io.github.thatkawaiisam.assemble.AssembleBoard;
+import io.github.thatkawaiisam.assemble.board.AssembleBoard;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.event.Event;
